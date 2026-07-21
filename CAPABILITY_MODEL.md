@@ -1,183 +1,129 @@
-# Capability Model
+# Evnetic OS Capability Model
 
 ## Overview
 
-Capabilities are the fundamental abstraction model of Evnetic OS.
+Evnetic OS is designed around capabilities, not devices.
 
-Evnetic OS does not define machines by their hardware.
+A traditional robotics platform is hardware-centric:
 
-It defines machines by what they are capable of doing.
+Robot Model
+    |
+    ├── Sensors
+    ├── Motors
+    └── Software
 
-A device is not:
 
-```
-Rover Model X
-```
+Evnetic OS uses an abstraction layer:
 
-A device is:
+Device
+    |
+    ├── Capabilities
+    |
+    ├── Skills
+    |
+    └── Applications
 
-```
-A system capable of:
 
-- navigation
-- vision
-- audio interaction
-- environment perception
-```
+The operating system does not reason about what a machine is.
+
+It reasons about what a machine can do.
 
 ---
 
 # Core Principle
 
-## Hardware is implementation.
+A capability represents a functional ability exposed by a device.
 
-## Capability is functionality.
+Examples:
 
-The intelligence layer interacts with capabilities.
+- Navigation
+- Vision
+- Audio Interaction
+- Object Detection
+- Manipulation
+- Environmental Monitoring
+- Data Collection
 
-It never depends directly on hardware.
+
+Capabilities are discoverable, versioned and permission-controlled.
 
 ---
 
 # Capability Definition
 
-A capability represents a functional ability exposed by a device.
+A capability consists of:
+
+- Identity
+- Version
+- Requirements
+- Interfaces
+- Permissions
+- Limitations
+
 
 Example:
 
 ```yaml
 capability:
+
   id: navigation
+
   version: 1.0
 
-  inputs:
-    - destination
-
-  outputs:
-    - position
-    - status
+  description:
+    Autonomous movement capability
 
   requirements:
-    - localization
-    - motor_control
-```
+
+    hardware:
+      - motors
+      - localization
+
+    software:
+      - navigation-engine
+
+
+  permissions:
+
+    required:
+      - movement.execute
+
+
+  limits:
+
+    max_speed:
+      value: 1.5
+      unit: meters_per_second
+````
 
 ---
 
-# Capability Categories
+# Device Capability Registry
 
-## Perception
-
-Allows the system to understand the environment.
-
-Examples:
-
-* camera.
-* lidar.
-* audio recognition.
-* object detection.
-
----
-
-## Movement
-
-Controls physical displacement.
-
-Examples:
-
-* navigation.
-* positioning.
-* obstacle avoidance.
-
----
-
-## Manipulation
-
-Interaction with physical objects.
-
-Examples:
-
-* robotic arm.
-* gripper.
-* tool usage.
-
----
-
-## Communication
-
-Interaction capabilities.
-
-Examples:
-
-* voice.
-* notifications.
-* external systems.
-
----
-
-## Intelligence
-
-Internal cognitive capabilities.
-
-Examples:
-
-* memory.
-* reasoning.
-* learning.
-
----
-
-# Capability Lifecycle
-
-A capability follows:
-
-```
-Discovery
-
-↓
-
-Registration
-
-↓
-
-Validation
-
-↓
-
-Availability
-
-↓
-
-Execution
-
-↓
-
-Monitoring
-```
-
----
-
-# Capability Registry
-
-Every device reports available capabilities.
+Every device registered in Evnetic OS exposes a capability manifest.
 
 Example:
 
 ```json
 {
- "device":"rover001",
+ "device_id":"rover001",
 
  "capabilities":[
 
- {
- "name":"navigation",
- "version":"1.0"
- },
+    {
+      "name":"navigation",
+      "version":"1.0"
+    },
 
- {
- "name":"vision",
- "version":"2.0"
- }
+    {
+      "name":"camera",
+      "version":"2.1"
+    },
+
+    {
+      "name":"audio",
+      "version":"1.0"
+    }
 
  ]
 }
@@ -185,66 +131,192 @@ Example:
 
 ---
 
-# Capability Requirements
+# Capability Discovery
 
-Capabilities may depend on others.
+When a device connects:
 
-Example:
+Device
 
-```
-Search Object
+↓
 
-requires:
+Evnetic Edge Runtime
 
-Vision
+↓
 
-+
+Cloud Control Plane
 
-Navigation
+↓
 
-+
+Capability Registry
 
-Localization
-```
+The platform learns:
 
----
-
-# Capability Ownership
-
-Each capability must define:
-
-* owner module.
-* version.
-* interface.
-* permissions.
-* safety requirements.
+* available functions
+* hardware limitations
+* software versions
+* security constraints
 
 ---
 
-# Relationship with Kairo
+# Kairo and Capabilities
 
-Kairo reasons using capabilities.
+Kairo does not know hardware.
+
+Kairo reasons through capabilities.
 
 Example:
 
 User:
 
-"Find the package."
+"Revisá el depósito"
 
 Kairo:
 
-```
 Goal:
-
-Find package
-
+Inspect warehouse
 
 Required capabilities:
 
-vision
-navigation
-reporting
-```
+* navigation
+* vision
+* reporting
+
+Capability resolver:
+
+Find available device:
+
+Rover A:
+
+✓ navigation
+
+✓ vision
+
+✓ reporting
+
+Mission generated.
+
+---
+
+# Capability Lifecycle
+
+Capabilities follow a lifecycle:
+
+Created
+
+↓
+
+Registered
+
+↓
+
+Validated
+
+↓
+
+Available
+
+↓
+
+Updated
+
+↓
+
+Deprecated
+
+---
+
+# Capability Versioning
+
+Capabilities must support evolution.
+
+Example:
+
+navigation:
+
+v1.0
+
+Basic navigation
+
+v2.0
+
+Obstacle prediction
+
+v3.0
+
+Multi-agent coordination
+
+Old devices should continue operating.
+
+---
+
+# Capability Security
+
+Every capability requires authorization.
+
+Example:
+
+Viewer:
+
+Can access:
+
+* camera.read
+
+Operator:
+
+Can execute:
+
+* navigation.execute
+
+Administrator:
+
+Can update:
+
+* capability.configuration
+
+---
+
+# Capability Categories
+
+## Physical
+
+Direct interaction:
+
+* movement
+* manipulation
+* charging
+
+## Perception
+
+Understanding environment:
+
+* camera
+* lidar
+* microphone
+* sensors
+
+## Intelligence
+
+Processing:
+
+* object recognition
+* anomaly detection
+* prediction
+
+## Communication
+
+Connectivity:
+
+* LTE
+* WiFi
+* Bluetooth
+
+## Services
+
+Platform functions:
+
+* reporting
+* storage
+* notifications
 
 ---
 
@@ -252,7 +324,10 @@ reporting
 
 The capability model enables:
 
-* third-party skills.
-* new hardware.
-* device interoperability.
-* autonomous planning.
+* drones
+* industrial arms
+* autonomous vehicles
+* agricultural machines
+* inspection systems
+
+without changing the operating system core.

@@ -1,60 +1,10 @@
-# Extension Guide
+# Evnetic OS Extension Guide
 
-## Overview
+## Purpose
 
-Extensions allow Evnetic OS to expand beyond its original capabilities.
+Extensions allow developers to add new functionality without modifying the Evnetic OS core.
 
-An extension is a software module that adds functionality without modifying the core platform.
-
----
-
-# Extension Types
-
-## Skills
-
-Executable abilities.
-
-Example:
-
-```
-Inventory Scan Skill
-```
-
----
-
-## Applications
-
-User-facing functionality.
-
-Example:
-
-```
-Warehouse Management App
-```
-
----
-
-## Agents
-
-Specialized autonomous intelligence.
-
-Example:
-
-```
-Security Monitoring Agent
-```
-
----
-
-## Integrations
-
-External system connections.
-
-Example:
-
-```
-ERP Integration
-```
+The extension model transforms Evnetic OS into an ecosystem.
 
 ---
 
@@ -62,64 +12,191 @@ ERP Integration
 
 Extensions must:
 
-* use official APIs.
-* respect permissions.
-* declare capabilities.
-* follow security rules.
+1. Be isolated.
+2. Declare dependencies.
+3. Respect permissions.
+4. Use official APIs.
+5. Avoid direct hardware access.
 
 ---
 
-# Extension Structure
+# Extension Architecture
+
+Extension
+
+↓
+
+Evnetic SDK
+
+↓
+
+Capability Layer
+
+↓
+
+Evnetic OS
+
+
+Extensions never bypass:
+
+- Security layer
+- Permission system
+- Safety policies
+
+---
+
+# Extension Types
+
+
+## Skills
+
+Executable abilities.
 
 Example:
 
-```
-warehouse-extension/
+WarehouseInspectionSkill
 
-├── manifest.yaml
 
-├── capabilities/
+Provides:
 
-├── tools/
+- image analysis
+- reporting
+- anomaly detection
 
-├── configuration/
 
-└── tests/
-```
+---
+
+## Agents
+
+Autonomous reasoning components.
+
+Example:
+
+SecurityAgent
+
+
+Responsibilities:
+
+- monitor events
+- generate recommendations
+- request missions
+
+
+---
+
+## Integrations
+
+External systems.
+
+Examples:
+
+- ERP
+- CRM
+- industrial platforms
+
 
 ---
 
 # Extension Manifest
 
-Every extension declares:
+Every extension requires:
+
+extension.yaml
+
+
+Example:
 
 ```yaml
 name:
+
+ warehouse-inspection
+
+
 version:
 
-requires:
+1.0
 
-capabilities:
+
+type:
+
+ skill
+
+
+required_capabilities:
+
+ - camera
+
+ - navigation
+
 
 permissions:
+
+ - camera.read
+
+ - mission.create
 ```
 
 ---
 
-# Isolation
+# Extension Execution Model
 
-Extensions must not:
+Extension
 
-* modify core components.
-* bypass security.
-* access hardware directly.
+↓
+
+Runtime Manager
+
+↓
+
+Permission Validation
+
+↓
+
+Execution Sandbox
+
+↓
+
+Results
 
 ---
 
-# Future Marketplace
+# Marketplace Future
 
-Evnetic OS may support:
+Future versions may support:
 
-* certified extensions.
-* developer ecosystem.
-* enterprise solutions.
+Evnetic Marketplace
+
+Developers:
+
+create extensions
+
+Users:
+
+install capabilities
+
+Companies:
+
+deploy solutions
+
+---
+
+# Extension Security
+
+Extensions cannot:
+
+* access motors directly
+* bypass safety rules
+* modify core services
+* access unauthorized data
+
+---
+
+# Design Goal
+
+The objective is:
+
+Hardware manufacturers build machines.
+
+Developers build capabilities.
+
+Evnetic OS orchestrates everything.

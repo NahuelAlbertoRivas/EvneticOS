@@ -1,24 +1,39 @@
-# SDK Guide
+# Evnetic OS SDK Guide
 
 ## Overview
 
-The Evnetic SDK provides tools and interfaces for extending Evnetic OS.
+The Evnetic SDK provides official interfaces to build applications, capabilities and extensions.
 
 The goal is to allow developers to build capabilities, applications and integrations without modifying the operating system core.
 
 ---
 
+# SDK Goals
+
+The SDK provides:
+
+- consistency
+- security
+- compatibility
+- version management
+
+
+---
+
 # SDK Components
+
 
 ## Robot SDK
 
-For hardware integrations.
+For hardware manufacturers.
 
-Allows:
 
-* device registration.
-* capability exposure.
-* communication.
+Provides:
+
+- device registration
+- communication
+- capability declaration
+
 
 ---
 
@@ -26,90 +41,94 @@ Allows:
 
 For creating new capabilities.
 
+
 Example:
 
-```
-Navigation Capability
+```python
 
-Vision Capability
+class VisionCapability:
+
+    def detect(self,image):
+        pass
+
 ```
 
 ---
 
 ## Extension SDK
 
-For third-party modules.
+For third-party developers.
 
 Allows:
 
-* skills.
-* applications.
-* agents.
+* skills
+* agents
+* integrations
 
 ---
 
 ## API SDK
 
-For external integrations.
+For external applications.
 
-Provides:
+Supports:
 
-* authentication.
-* API clients.
-* event handling.
+* Web
+* Mobile
+* Enterprise systems
 
 ---
 
-# SDK Principles
+# SDK Design Principles
 
 ## Stable Interfaces
 
-Public interfaces must evolve carefully.
+Internal implementation may change.
+
+Public contracts remain stable.
 
 ---
 
-## Versioning
+## Version Compatibility
 
-All SDK components require semantic versioning.
+SDK versions follow:
 
-Example:
+Major.Minor.Patch
 
-```
-1.0.0
-```
+Breaking changes require major versions.
 
 ---
 
-## Documentation
+## Security First
 
-Every SDK component requires:
+All SDK operations require:
 
-* examples.
-* API reference.
-* migration guides.
+* authentication
+* authorization
+* auditing
 
 ---
 
-# Developer Experience Goal
+# Developer Experience
 
-The final ecosystem should allow:
+A developer should be able to:
 
-```
-Developer
+1. Install SDK.
 
-↓
+2. Create extension.
 
-Evnetic SDK
+3. Declare capabilities.
 
-↓
+4. Test locally.
 
-Extension
+5. Deploy to Evnetic OS.
 
-↓
+---
 
-Evnetic OS
+# Long Term Vision
 
-↓
+The SDK transforms Evnetic OS from a product into a platform.
 
-Autonomous Machine
-```
+The objective is not only to build autonomous machines.
+
+The objective is to create the operating layer where autonomous machines evolve.
