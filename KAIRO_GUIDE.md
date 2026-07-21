@@ -4,49 +4,73 @@
 
 Kairo is the intelligence layer of Evnetic OS.
 
-Kairo is an autonomous software agent responsible for understanding objectives, reasoning about available resources and coordinating actions.
+Kairo is not a chatbot.
 
-Kairo is not the operating system.
+Kairo is an autonomous operational agent capable of:
 
-Kairo is one of its fundamental components.
+- understanding user intent,
+- reasoning about objectives,
+- creating plans,
+- interacting with capabilities,
+- managing context,
+- learning from previous experiences,
+- operating under explicit safety policies.
+
+
+Kairo transforms human objectives into executable actions.
 
 ---
 
 # Identity
 
-Kairo represents the cognitive interface between humans and autonomous machines.
+Kairo represents the intelligence interface of Evnetic OS.
 
-The interaction model:
+The relationship is:
 
-```
-Human Intent
+                Evnetic OS
 
-↓
+                    |
 
-Kairo
+                  Kairo
 
-↓
+                    |
 
-Evnetic OS
+        Capabilities / Applications
 
-↓
+                    |
 
-Capabilities
+              Physical Devices
 
-↓
 
-Physical Execution
-```
+Kairo thinks.
+
+Evnetic OS coordinates.
+
+Edge Runtime executes.
 
 ---
 
-# Responsibilities
+# Core Principles
 
-Kairo is responsible for:
+## 1. Hardware Independence
 
-## Understanding
+Kairo never reasons about specific hardware.
 
-Convert natural language into structured objectives.
+Incorrect:
+
+"Move Rover Model X to coordinate 50."
+
+
+Correct:
+
+"Execute navigation capability toward target location."
+
+
+---
+
+## 2. Capability Driven Intelligence
+
+Kairo interacts through capabilities.
 
 Example:
 
@@ -54,78 +78,41 @@ User:
 
 "Inspect the warehouse."
 
-Result:
 
-```yaml
-goal:
-  type: inspection
-  location:
-    warehouse
-```
+Kairo:
+
+Goal:
+
+Warehouse inspection
+
+
+Required capabilities:
+
+- navigation
+- vision
+- reporting
+
+
+Capability resolver:
+
+Find compatible devices.
+
 
 ---
 
-## Reasoning
+## 3. Tool-Based Execution
 
-Determine:
+Kairo does not directly execute physical actions.
 
-* required capabilities.
-* execution strategy.
-* constraints.
-
----
-
-## Planning
-
-Transform objectives into missions.
 
 Example:
 
-```
-Inspect Warehouse
 
-1. Navigate
-2. Capture Images
-3. Analyze
-4. Generate Report
-```
-
----
-
-## Memory
-
-Maintain contextual information.
-
-Memory types:
-
-## Short Term
-
-Current conversation.
-
-## Operational
-
-Recent missions and states.
-
-## Semantic
-
-Long-term knowledge.
-
----
-
-# Tools
-
-Kairo does not directly execute actions.
-
-It uses tools.
-
-Example:
-
-```
 Kairo
 
 ↓
 
-create_mission()
+Tool
 
 ↓
 
@@ -133,40 +120,352 @@ Mission Service
 
 ↓
 
-Robot
+Edge Runtime
+
+↓
+
+Hardware
+
+
+This separation guarantees:
+
+- security,
+- auditing,
+- replaceability,
+- scalability.
+
+
+---
+
+# Kairo Architecture
+
+```
+
+```
+             KAIRO
+
+
+    ┌─────────────────┐
+    │                 │
+    │ Runtime Engine  │
+    │                 │
+    └────────┬────────┘
+
+             |
+```
+
+┌───────────────┼────────────────┐
+
+Memory       Reasoning        Tools
+
+```
+             |
+
+        Orchestration
+
+
+             |
+
+      Evnetic OS Services
+```
+
 ```
 
 ---
 
-# Tool Principles
+# Components
 
-Tools must:
+## Kairo Runtime
 
-* have explicit permissions.
-* define inputs.
-* validate outputs.
-* expose failures.
+The execution core.
+
+Responsibilities:
+
+- lifecycle management,
+- context handling,
+- conversations,
+- state management,
+- task execution.
+
+
+---
+
+## Reasoning Engine
+
+Responsible for:
+
+- understanding intent,
+- decomposition,
+- planning,
+- decision making.
+
+
+Example:
+
+
+Objective:
+
+"Secure the building."
+
+
+Reasoning:
+
+1. Identify available security capabilities.
+2. Select devices.
+3. Create monitoring mission.
+4. Configure alerts.
+
+
+---
+
+## Memory System
+
+Kairo requires multiple memory layers.
+
+
+## Short-Term Memory
+
+Current interaction context.
+
+Example:
+
+Current conversation.
+
+---
+
+## Operational Memory
+
+Previous tasks and outcomes.
+
+Example:
+
+"Warehouse inspection completed yesterday."
+
+
+---
+
+## Semantic Memory
+
+Knowledge database.
+
+Example:
+
+- locations,
+- users,
+- operational rules.
+
+
+---
+
+## Provider Memory
+
+Information about external AI providers.
+
+Examples:
+
+- model availability,
+- costs,
+- limits.
+
+
+---
+
+# LLM Provider Abstraction
+
+Kairo must never depend on a single AI provider.
+
+
+Architecture:
+
+```
+
+```
+          Kairo
+
+            |
+
+      Provider Interface
+
+            |
+```
+
+┌──────────────┼──────────────┐
+
+OpenAI      OpenRouter      Local Models
+
+````
+
+
+Example interface:
+
+
+```python
+class LLMProvider:
+
+    def generate():
+
+        pass
+
+    def analyze():
+
+        pass
+
+    def summarize():
+
+        pass
+````
+
+---
+
+# Local Intelligence
+
+Kairo must provide useful functionality without cloud connectivity.
+
+The system should distinguish:
+
+## Local Intelligence
+
+Available on Edge:
+
+* safety rules,
+* basic commands,
+* predefined behaviors,
+* emergency handling,
+* local navigation.
+
+## Cloud Intelligence
+
+Available when connected:
+
+* advanced reasoning,
+* large context,
+* external knowledge,
+* multimodal analysis.
+
+---
+
+# Offline Operation Model
+
+Normal:
+
+Device
+
+↓
+
+Edge Runtime
+
+↓
+
+Kairo Cloud Intelligence
+
+---
+
+Disconnected:
+
+Device
+
+↓
+
+Local Kairo Runtime
+
+↓
+
+Local Capabilities
+
+The robot must remain safe and functional.
+
+---
+
+# Voice Interaction
+
+Kairo is the identity behind voice interaction.
+
+Flow:
+
+Microphone
+
+↓
+
+Wake Word Detection
+
+↓
+
+Speech To Text
+
+↓
+
+Kairo Runtime
+
+↓
+
+Intent Understanding
+
+↓
+
+Action / Response
+
+↓
+
+Text To Speech
+
+---
+
+# Wake Word
+
+Wake word detection must operate locally.
+
+Examples:
+
+* Hey Kairo
+* Hello Kairo
+* Custom activation phrase
+
+Benefits:
+
+* privacy,
+* reduced latency,
+* lower cloud cost.
+
+---
+
+# Kairo Tools
+
+Tools are controlled interfaces exposed by Evnetic OS.
+
+Examples:
+
+```
+create_mission()
+
+get_robot_status()
+
+analyze_image()
+
+send_notification()
+
+retrieve_memory()
+```
+
+Tools must define:
+
+* input schema,
+* permissions,
+* expected outputs,
+* failure cases.
 
 ---
 
 # Safety Model
 
-Kairo can propose.
+Kairo is intelligent but not authoritative.
 
-The system validates.
+Execution requires:
 
-Execution flow:
-
-```
-Intent
+Kairo Decision
 
 ↓
 
-Reasoning
-
-↓
-
-Tool Request
+Policy Validation
 
 ↓
 
@@ -174,57 +473,76 @@ Permission Check
 
 ↓
 
-Safety Validation
+Safety Layer
 
 ↓
 
 Execution
-```
+
+Safety always overrides autonomy.
 
 ---
 
-# Provider Independence
+# Subscription Model Integration
 
-Kairo must not depend on a single AI provider.
+Kairo supports different intelligence tiers.
 
-Architecture:
+Example:
 
-```
-Kairo
+## Basic
 
-↓
+Includes:
 
-Provider Interface
+* local intelligence,
+* predefined automation,
+* limited cloud usage.
 
-↓
+## Advanced
 
-OpenAI
-OpenRouter
-Anthropic
-Local Models
-```
+Includes:
+
+* larger LLM models,
+* advanced reasoning,
+* multimodal analysis.
+
+## Enterprise
+
+Includes:
+
+* dedicated models,
+* private knowledge bases,
+* higher storage,
+* custom agents.
 
 ---
 
-# Personality
+# Cost Awareness
 
-Kairo may have configurable interaction styles.
+Kairo should be aware of operational costs.
 
-However:
+Examples:
 
-Personality must never modify:
+Before processing:
 
-* permissions.
-* safety.
-* operational rules.
+"Analyze 10,000 images"
+
+Kairo may evaluate:
+
+* required model,
+* estimated cost,
+* available quota.
 
 ---
 
 # Future Evolution
 
-Kairo may evolve toward:
+Kairo is designed to evolve into:
 
-* multiple specialized agents.
-* domain experts.
-* collaborative autonomy.
-* adaptive learning.
+* autonomous agents,
+* multi-agent coordination,
+* domain specialists,
+* third-party extensions.
+
+The long-term vision:
+
+Every autonomous machine powered by Evnetic OS has a Kairo intelligence layer.
